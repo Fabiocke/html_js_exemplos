@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <h1>TESTE</h1>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            padding: 0;
+            text-align: center;
+        }
+
+
+        #txt1 {
+            text-transform: uppercase;
+            border-top: 0cm;
+            border-left: 0cm;
+            border-right: 0cm;
+            outline-width: 0;
+            width: 260px;
+        }
+
+
+        ul {
+            list-style: none;
+            display: inline-block;
+            width: 260px;
+        }
+
+        li {
+            width: 100%;
+            margin-top: 3px;
+            text-align: left;
+            background-color: rgb(230, 230, 230);
+        }
+
+
+        a {
+            padding: 15px;
+            display: block;
+            line-height: 25px;
+            cursor: pointer;
+            font-family: Arial;
+        }
+
+        button {
+            cursor: pointer;
+            margin-top: 5px;
+            background-color: white;
+            width: 260px;
+            height: 30px;
+            border-color: orange;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <ul>
+        <li> <input type="text" id='txt1' onkeyup="chanja()"> </li>
+        <li> <button>Avançar</button> </li>
+    </ul>
+
+    <div id='teste'></div>
+
+    <script>
+        var d1 = { 'PETR4': ['Petroleo'], 'VALE3': ['Vale'], 'MOVI3': ['Movida'], 'VAVA1': ['Vavalaaaaaaaaaaaaaaaaaaaaaaaaaaaus'], 'PECR': ['Pecra'], 'VICO3': ['Vicros'] }
+
+        var carteira = []
+
+        document.getElementById('txt1').focus()
+
+        chanja();
+
+        function remove_ul() {
+            while (uls[0]) {
+                uls[0].parentNode.removeChild(uls[0]);
+            }
+        }
+
+        function chanja() {
+            var ul = document.getElementById('lista_ativos')
+            if (document.contains(ul)) { ul.remove() }
+            var ul = document.createElement('ul')
+            ul.id = 'lista_ativos'
+            document.getElementsByTagName('body')[0].appendChild(ul);
+
+            var c = carteira
+            var l = []
+            for (var k in d1) { if (c.indexOf(k) == -1) { l.push(k) } }
+            l = l.concat(c)
+
+            l1 = []
+            l.forEach(function (i) { l1.push([i, d1[i][0]]) })
+
+            l1.forEach(teste)
+        }
+
+        function teste(item) {
+            var tn1 = window.document.getElementById('txt1')
+            var tn1 = tn1.value.toUpperCase()
+
+            if ((tn1.length >= 2 & item[0].startsWith(tn1)) | carteira.indexOf(item[0]) >= 0) {
+                criar_a(item)
+            }
+        }
+
+        function criar_a(item) {
+            tn = item[0] + '&emsp;&emsp;&emsp;' + item[1].substring(0, 15)
+            document.getElementById('lista_ativos').appendChild(document.createElement('li'))
+
+            var a = document.createElement('a');
+            a.innerHTML = tn
+            a.className = 'ativo'
+            if (carteira.indexOf(item[0]) >= 0) {
+                a.style = 'background-color: orange'
+            }
+
+            a.onclick = function () {
+                if (carteira.indexOf(item[0]) >= 0) {
+                    this.style = 'background-color: rgb(230, 230, 230)'
+                    carteira.splice(carteira.indexOf(item[0]))
+                }
+                else {
+                    this.style = 'background-color: orange';
+                    carteira.push(item[0])
+                }
+
+                document.getElementById('txt1').focus()
+            }
+
+            li = document.getElementsByTagName('li')
+            li[li.length - 1].appendChild(a);
+
+        }
+
+    </script>
+
+</body>
+
+</html>
